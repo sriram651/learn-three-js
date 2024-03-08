@@ -1,4 +1,4 @@
-import * as THREE from "./three.module.js";
+import * as THREE from "three";
 
 // Create a new THREE Scene.
 const scene = new THREE.Scene();
@@ -10,10 +10,10 @@ const aspectRatio = WIDTH / HEIGHT;
 
 // Create a camera object.
 const camera = new THREE.PerspectiveCamera(
-    75, // Field of view
-    aspectRatio, // aspect ratio
-    0.1, // near point
-    1000, // far point
+  75, // Field of view
+  aspectRatio, // aspect ratio
+  0.1, // near point
+  1000, // far point
 );
 
 // Add the camera to the scene.
@@ -56,7 +56,7 @@ const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
 // Create a texture for the floor.
-const texture = new THREE.TextureLoader().load("./../images/sandal-marble-texture.webp");
+const texture = new THREE.TextureLoader().load("/images/sandal-marble-texture.webp");
 
 // Create a Floor plane
 const planeGeometry = new THREE.PlaneGeometry(100, 100);
@@ -75,8 +75,8 @@ const wallGroup = new THREE.Group();
 // NOTE: Instead of creating separate variables for each wall's geometry and mesh, we assign them directly.
 // Front Wall
 const frontWallGeometry = new THREE.Mesh(
-    new THREE.BoxGeometry(50, 20, 0.01),
-    new THREE.MeshBasicMaterial({ color: "red", side: THREE.DoubleSide })
+  new THREE.BoxGeometry(50, 20, 0.01),
+  new THREE.MeshBasicMaterial({ color: "red", side: THREE.DoubleSide })
 );
 
 // Push the front wall away from the camera
@@ -85,8 +85,8 @@ frontWallGeometry.position.z = -20;
 
 // Left Wall
 const leftWallGeometry = new THREE.Mesh(
-    new THREE.BoxGeometry(50, 20, 0.01),
-    new THREE.MeshBasicMaterial({ color: "green", side: THREE.DoubleSide })
+  new THREE.BoxGeometry(50, 20, 0.01),
+  new THREE.MeshBasicMaterial({ color: "green", side: THREE.DoubleSide })
 );
 
 // Rotate the leftWall along the y-axis 90deg and then push it to the left side
@@ -95,8 +95,8 @@ leftWallGeometry.rotation.y = Math.PI / 2;
 
 // Left Wall
 const rightWallGeometry = new THREE.Mesh(
-    new THREE.BoxGeometry(50, 20, 0.01),
-    new THREE.MeshBasicMaterial({ color: "blue", side: THREE.DoubleSide })
+  new THREE.BoxGeometry(50, 20, 0.01),
+  new THREE.MeshBasicMaterial({ color: "blue", side: THREE.DoubleSide })
 );
 
 // Rotate the rightWall along the y-axis 90deg and then push it to the right side
@@ -112,8 +112,8 @@ scene.add(wallGroup);
 
 // Create the Ceiling.
 const ceilingWall = new THREE.Mesh(
-    new THREE.PlaneGeometry(100, 100),
-    new THREE.MeshBasicMaterial({ color: "yellow", side: THREE.DoubleSide })
+  new THREE.PlaneGeometry(100, 100),
+  new THREE.MeshBasicMaterial({ color: "yellow", side: THREE.DoubleSide })
 );
 
 // Rotate the Ceiling along the x-axis 90deg and push to the the top.
@@ -126,49 +126,49 @@ scene.add(ceilingWall);
 // TODO: Not yet completed!
 // Loop through each of the walls and create a bounding box.
 for (let wall = 0; wall < wallGroup.children.length; wall++) {
-    wallGroup.children[wall].BBox = new THREE.Box3();
-    wallGroup.children[wall].BBox.setFromObject(wallGroup.children[wall]);
-} 
+  wallGroup.children[wall].BBox = new THREE.Box3();
+  wallGroup.children[wall].BBox.setFromObject(wallGroup.children[wall]);
+}
 
 // Controls
 document.addEventListener("keydown", onKeyDown);
 
 // Move the camera based on the direction of the arrow keys.
 function onKeyDown(e) {
-    switch (e.keyCode) {
+  switch (e.keyCode) {
 
-        // Left Arrow
-        case 37:
-            camera.translateX(0.05)
-            break;
+    // Left Arrow
+    case 37:
+      camera.translateX(0.05)
+      break;
 
-        // Right Arrow
-        case 39:
-            camera.translateX(-0.05)
-            break;
+    // Right Arrow
+    case 39:
+      camera.translateX(-0.05)
+      break;
 
-        // Up Arrow
-        case 38:
-            camera.translateY(-0.05)
-            break;
+    // Up Arrow
+    case 38:
+      camera.translateY(-0.05)
+      break;
 
-        // Down Arrow
-        case 40:
-            camera.translateY(0.05)
-            break;
-        default:
-            break;
-    }
+    // Down Arrow
+    case 40:
+      camera.translateY(0.05)
+      break;
+    default:
+      break;
+  }
 }
 
 // Finally render the scene.
 function render() {
-    cube.rotation.y += 0.01;
-    cube.rotation.x += 0.01;
+  cube.rotation.y += 0.01;
+  cube.rotation.x += 0.01;
 
-    // Render the scene and camera.
-    renderer.render(scene, camera);
-    requestAnimationFrame(render);
+  // Render the scene and camera.
+  renderer.render(scene, camera);
+  requestAnimationFrame(render);
 }
 
 render();
