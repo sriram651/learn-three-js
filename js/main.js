@@ -59,14 +59,69 @@ scene.add(cube);
 const texture = new THREE.TextureLoader().load("./../images/sandal-marble-texture.webp");
 
 // Create a Floor plane
-const planeGeometry = new THREE.PlaneGeometry(20, 20);
+const planeGeometry = new THREE.PlaneGeometry(100, 100);
 const planeMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 
 plane.rotation.x = Math.PI / 2; // Degrees in radians
-plane.position.y = -Math.PI;
+plane.position.y = -Math.PI * 3;
 
 scene.add(plane);
+
+// Create the Walls
+// We need to create the walls as a group.
+const group = new THREE.Group();
+
+// NOTE: Instead of creating separate variables for each wall's geometry and mesh, we assign them directly.
+// Front Wall
+const frontWallGeometry = new THREE.Mesh(
+    new THREE.BoxGeometry(50, 20, 0.01),
+    new THREE.MeshBasicMaterial({ color: "red", side: THREE.DoubleSide })
+);
+
+// Push the front wall away from the camera
+frontWallGeometry.position.z = -20;
+// frontWallGeometry.position.y = 4;
+
+// Left Wall
+const leftWallGeometry = new THREE.Mesh(
+    new THREE.BoxGeometry(50, 20, 0.01),
+    new THREE.MeshBasicMaterial({ color: "green", side: THREE.DoubleSide })
+);
+
+// Rotate the leftWall along the y-axis 90deg and then push it to the left side
+leftWallGeometry.position.x = -20;
+leftWallGeometry.rotation.y = Math.PI / 2;
+
+// Left Wall
+const rightWallGeometry = new THREE.Mesh(
+    new THREE.BoxGeometry(50, 20, 0.01),
+    new THREE.MeshBasicMaterial({ color: "blue", side: THREE.DoubleSide })
+);
+
+// Rotate the rightWall along the y-axis 90deg and then push it to the right side
+rightWallGeometry.position.x = 20;
+rightWallGeometry.rotation.y = Math.PI / 2;
+
+
+// Add all the 3 walls to the group that we created earlier.
+group.add(frontWallGeometry, leftWallGeometry, rightWallGeometry);
+
+// Finally, add the group to the scene
+scene.add(group);
+
+// Create the Ceiling.
+const ceilingWall = new THREE.Mesh(
+    new THREE.PlaneGeometry(100, 100),
+    new THREE.MeshBasicMaterial({ color: "yellow", side: THREE.DoubleSide })
+);
+
+// Rotate the Ceiling along the x-axis 90deg and push to the the top.
+ceilingWall.rotation.x = Math.PI / 2;
+ceilingWall.position.y = Math.PI * 3;
+
+// Add the Ceiling to the scene
+scene.add(ceilingWall);
 
 // Controls
 document.addEventListener("keydown", onKeyDown);
