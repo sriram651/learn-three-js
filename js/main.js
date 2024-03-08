@@ -70,7 +70,7 @@ scene.add(plane);
 
 // Create the Walls
 // We need to create the walls as a group.
-const group = new THREE.Group();
+const wallGroup = new THREE.Group();
 
 // NOTE: Instead of creating separate variables for each wall's geometry and mesh, we assign them directly.
 // Front Wall
@@ -105,10 +105,10 @@ rightWallGeometry.rotation.y = Math.PI / 2;
 
 
 // Add all the 3 walls to the group that we created earlier.
-group.add(frontWallGeometry, leftWallGeometry, rightWallGeometry);
+wallGroup.add(frontWallGeometry, leftWallGeometry, rightWallGeometry);
 
 // Finally, add the group to the scene
-scene.add(group);
+scene.add(wallGroup);
 
 // Create the Ceiling.
 const ceilingWall = new THREE.Mesh(
@@ -122,6 +122,13 @@ ceilingWall.position.y = Math.PI * 3;
 
 // Add the Ceiling to the scene
 scene.add(ceilingWall);
+
+// TODO: Not yet completed!
+// Loop through each of the walls and create a bounding box.
+for (let wall = 0; wall < wallGroup.children.length; wall++) {
+    wallGroup.children[wall].BBox = new THREE.Box3();
+    wallGroup.children[wall].BBox.setFromObject(wallGroup.children[wall]);
+} 
 
 // Controls
 document.addEventListener("keydown", onKeyDown);
