@@ -51,14 +51,6 @@ directionalLight.position.y = 15;
 // Add the directional light to the scene.
 scene.add(directionalLight);
 
-// Geometry
-const geometry = new THREE.BoxGeometry(2, 2, 2); // Shape of the object
-const material = new THREE.MeshBasicMaterial({ color: "#442ad4" }); // Color of the object/material
-const cube = new THREE.Mesh(geometry, material);
-
-// Add the mesh to the scene.
-scene.add(cube);
-
 // Create a texture for the floor.
 const texture = loadTexture("/images/sandal-marble-texture.webp");
 
@@ -183,9 +175,6 @@ function onKeyDown(e) {
 
 // Finally render the scene.
 function render() {
-  cube.rotation.y += 0.01;
-  cube.rotation.x += 0.01;
-
   // Render the scene and camera.
   renderer.render(scene, camera);
   requestAnimationFrame(render);
