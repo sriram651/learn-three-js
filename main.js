@@ -3,6 +3,7 @@ import { PointerLockControls } from "three-stdlib";
 import createPainting from "./utils/painting";
 import { loadTexture } from "./utils/texture";
 import { createWall } from "./utils/walls";
+import { moveUser, stopUser, updateMovement } from "./utils/movement";
 
 // Create a new THREE Scene.
 const scene = new THREE.Scene();
@@ -78,6 +79,12 @@ const frontWallGeometry = createWall(blueWallParams);
 // Push the front wall away from the camera
 frontWallGeometry.position.z = -20;
 
+// Front Wall
+const rearWallGeometry = createWall(blueWallParams);
+
+// Push the rear wall away from the camera
+rearWallGeometry.position.z = 20;
+
 // Left Wall
 const leftWallGeometry = createWall(blueWallParams);
 
@@ -94,7 +101,7 @@ rightWallGeometry.rotation.y = Math.PI / 2;
 
 
 // Add all the 3 walls to the group that we created earlier.
-wallGroup.add(frontWallGeometry, leftWallGeometry, rightWallGeometry);
+wallGroup.add(frontWallGeometry, rearWallGeometry, leftWallGeometry, rightWallGeometry);
 
 // Finally, add the group to the scene
 scene.add(wallGroup);
@@ -118,13 +125,6 @@ const painting2 = createPainting("/images/ronaldo-ucl.jpg", 10, 5, new THREE.Vec
 
 // Finally add the paintings to the scene
 scene.add(painting1, painting2);
-
-// TODO: Not yet completed!
-// Loop through each of the walls and create a bounding box.
-for (let wall = 0; wall < wallGroup.children.length; wall++) {
-  wallGroup.children[wall].BBox = new THREE.Box3();
-  wallGroup.children[wall].BBox.setFromObject(wallGroup.children[wall]);
-}
 
 // Controls
 const controls = new PointerLockControls(camera, document.body);
@@ -152,31 +152,14 @@ controls.addEventListener("unlock", showMenu);
 const startButton = document.getElementById("play-btn");
 startButton.addEventListener("click", startTouring);
 
-document.addEventListener("keydown", onKeyDown);
+document.addEventListener("keydown", moveUser);
+document.addEventListener("keyup", stopUser);
 
-// Move the camera based on the direction of the arrow keys.
-function onKeyDown(e) {
-  const code = e.keyCode;
-
-  // Left Arrow
-  if (code === 37 || code === 65)
-    controls.moveRight(-0.12);
-
-  // Right Arrow
-  if (code === 39 || code === 68)
-    controls.moveRight(0.12);
-
-  // Up Arrow
-  if (code === 38 || code === 87)
-    controls.moveForward(0.12);
-
-  // Down Arrow
-  if (code === 40 || code === 83)
-    controls.moveForward(-0.12);
-}
-
+const clock = new THREE.Clock();
 // Finally render the scene.
 function render() {
+  const delta = clock.getDelta();
+  updateMovement(delta, controls, camera, wallGroup);
   // Render the scene and camera.
   renderer.render(scene, camera);
   requestAnimationFrame(render);
