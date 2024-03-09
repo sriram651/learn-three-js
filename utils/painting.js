@@ -8,7 +8,7 @@ import * as THREE from "three";
  * @param {THREE.Vector3} position A Vector3 Object representing the position of the plane in the scene.
  * @returns the Plane along with the texture, geometry, and position.
  */
-export default function createPainting(imageUrl, width, height, position) {
+export default function createPainting(imageUrl, width, height, position, rotation=null) {
     const paintingTextureLoader = new THREE.TextureLoader();
     const paintingTexture = paintingTextureLoader.load(imageUrl);
     const paintingMaterial = new THREE.MeshBasicMaterial({ map: paintingTexture, side: THREE.DoubleSide });
@@ -16,6 +16,10 @@ export default function createPainting(imageUrl, width, height, position) {
 
     const paintingMesh = new THREE.Mesh(paintingGeometry, paintingMaterial);
     paintingMesh.position.set(position.x, position.y, position.z)
+
+    if (Boolean(rotation)) {
+        paintingMesh.rotation.set(rotation.x, rotation.y, rotation.z);
+    }
 
     return paintingMesh;
 }

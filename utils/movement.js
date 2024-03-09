@@ -26,7 +26,7 @@ export function stopUser(e) {
 export function updateMovement(delta, controls, camera, wallGroup) {
     // Determine the movement speed relative to the frame rate of the currently viewing window.
     // We use the delta to maintain same speeds in all screens.
-    const speed = 5 * delta;
+    const speed = 10 * delta;
 
     // To check if the user/camera is colliding with the cubicle/room/BoundingBox, 
     // We take store the clone of the current position before changing.
