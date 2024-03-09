@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import { PointerLockControls } from "three-stdlib";
+import createPainting from "./utils/createPainting";
 
 // Create a new THREE Scene.
 const scene = new THREE.Scene();
@@ -122,6 +124,13 @@ ceilingWall.position.y = Math.PI * 3;
 
 // Add the Ceiling to the scene
 scene.add(ceilingWall);
+
+// Create the paintings using the utility function.
+const painting1 = createPainting("/images/carousel-image4.webp", 10, 5, new THREE.Vector3(-10, 5, -19.99));
+const painting2 = createPainting("/images/ronaldo-ucl.jpg", 10, 5, new THREE.Vector3(10, 5, -19.99));
+
+// Finally add the paintings to the scene
+scene.add(painting1, painting2);
 
 // TODO: Not yet completed!
 // Loop through each of the walls and create a bounding box.
