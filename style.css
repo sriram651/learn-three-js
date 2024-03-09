@@ -9,25 +9,25 @@ html, body {
   font-family: 'Courier New', Courier, monospace;
 }
 
-body {
-  overflow: hidden;
-}
-
-.bg-menu {
-  margin: 20px auto;
+#bg-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  /* margin: 20px auto; */
   width: 800px;
   height: max-content;
+  background-color: white;
   border: 0px solid white;
   box-shadow: 0 6px 12px 0px black;
-  /* display: flex; */
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 24px;
   overflow: clip;
 }
 
-.bg-menu #menu {
+#bg-menu #menu {
   width: 100%;
   height: max-content;
   display: flex;
@@ -36,7 +36,7 @@ body {
   align-items: start;
 }
 
-.bg-menu #menu .img-container {
+#bg-menu #menu .img-container {
   width: 100%;
   max-height: 400px;
   aspect-ratio: auto;
@@ -44,7 +44,7 @@ body {
   object-position: center;
 }
 
-.bg-menu #menu .img-container img {
+#bg-menu #menu .img-container img {
   width: 100%;
   max-height: 300px;
   aspect-ratio: auto;
@@ -52,9 +52,9 @@ body {
   object-position: center;
 }
 
-.bg-menu #menu .content {
+#bg-menu #menu .content {
   width: 100%;
-  padding: 16px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;

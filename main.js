@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { PointerLockControls } from "three-stdlib";
-import createPainting from "./utils/createPainting";
+import createPainting from "./utils/painting";
+import { loadTexture } from "./utils/texture";
+import { createWall } from "./utils/walls";
 
 // Create a new THREE Scene.
 const scene = new THREE.Scene();
@@ -58,7 +60,7 @@ const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
 // Create a texture for the floor.
-const texture = new THREE.TextureLoader().load("/images/sandal-marble-texture.webp");
+const texture = loadTexture("/images/sandal-marble-texture.webp");
 
 // Create a Floor plane
 const planeGeometry = new THREE.PlaneGeometry(100, 100);
@@ -74,32 +76,25 @@ scene.add(plane);
 // We need to create the walls as a group.
 const wallGroup = new THREE.Group();
 
-// NOTE: Instead of creating separate variables for each wall's geometry and mesh, we assign them directly.
+const blueWallParams = {
+  map: loadTexture("/images/blue-marble-texture.webp"),
+  side: THREE.DoubleSide
+};
 // Front Wall
-const frontWallGeometry = new THREE.Mesh(
-  new THREE.BoxGeometry(50, 20, 0.01),
-  new THREE.MeshBasicMaterial({ color: "red", side: THREE.DoubleSide })
-);
+const frontWallGeometry = createWall(blueWallParams);
 
 // Push the front wall away from the camera
 frontWallGeometry.position.z = -20;
-// frontWallGeometry.position.y = 4;
 
 // Left Wall
-const leftWallGeometry = new THREE.Mesh(
-  new THREE.BoxGeometry(50, 20, 0.01),
-  new THREE.MeshBasicMaterial({ color: "green", side: THREE.DoubleSide })
-);
+const leftWallGeometry = createWall(blueWallParams);
 
 // Rotate the leftWall along the y-axis 90deg and then push it to the left side
 leftWallGeometry.position.x = -20;
 leftWallGeometry.rotation.y = Math.PI / 2;
 
 // Left Wall
-const rightWallGeometry = new THREE.Mesh(
-  new THREE.BoxGeometry(50, 20, 0.01),
-  new THREE.MeshBasicMaterial({ color: "blue", side: THREE.DoubleSide })
-);
+const rightWallGeometry = createWall(blueWallParams);
 
 // Rotate the rightWall along the y-axis 90deg and then push it to the right side
 rightWallGeometry.position.x = 20;
@@ -115,7 +110,7 @@ scene.add(wallGroup);
 // Create the Ceiling.
 const ceilingWall = new THREE.Mesh(
   new THREE.PlaneGeometry(100, 100),
-  new THREE.MeshBasicMaterial({ color: "yellow", side: THREE.DoubleSide })
+  new THREE.MeshBasicMaterial(blueWallParams)
 );
 
 // Rotate the Ceiling along the x-axis 90deg and push to the the top.
@@ -140,34 +135,50 @@ for (let wall = 0; wall < wallGroup.children.length; wall++) {
 }
 
 // Controls
+const controls = new PointerLockControls(camera, document.body);
+
+function startTouring() {
+  // Lock the pointer
+  controls.lock();
+
+  // Hide the menu
+  toggleMenu("none");
+}
+
+function toggleMenu(display) {
+  const menu = document.getElementById("bg-menu");
+
+  menu.style.display = display;
+}
+
+const startButton = document.getElementById("play-btn");
+startButton.addEventListener("click", startTouring);
+
 document.addEventListener("keydown", onKeyDown);
 
 // Move the camera based on the direction of the arrow keys.
 function onKeyDown(e) {
-  switch (e.keyCode) {
+  const code = e.keyCode;
 
-    // Left Arrow
-    case 37:
-      camera.translateX(0.05)
-      break;
+  // Left Arrow
+  if (code === 37 || code === 65)
+    controls.moveRight(-0.12);
 
-    // Right Arrow
-    case 39:
-      camera.translateX(-0.05)
-      break;
+  // Right Arrow
+  if (code === 39 || code === 68)
+    controls.moveRight(0.12);
 
-    // Up Arrow
-    case 38:
-      camera.translateY(-0.05)
-      break;
+  // Up Arrow
+  if (code === 38 || code === 87)
+    controls.moveForward(0.12);
 
-    // Down Arrow
-    case 40:
-      camera.translateY(0.05)
-      break;
-    default:
-      break;
-  }
+  // Down Arrow
+  if (code === 40 || code === 83)
+    controls.moveForward(-0.12);
+
+  // Escape key
+  if (code === 27)
+    toggleMenu("flex");
 }
 
 // Finally render the scene.
