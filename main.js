@@ -134,14 +134,20 @@ function startTouring() {
   controls.lock();
 
   // Hide the menu
-  toggleMenu("none");
+  hideMenu();
 }
 
-function toggleMenu(display) {
+function hideMenu() {
   const menu = document.getElementById("bg-menu");
-
-  menu.style.display = display;
+  menu.style.display = "none";
 }
+
+function showMenu() {
+  const menu = document.getElementById("bg-menu");
+  menu.style.display = "flex";
+}
+
+controls.addEventListener("unlock", showMenu);
 
 const startButton = document.getElementById("play-btn");
 startButton.addEventListener("click", startTouring);
@@ -167,10 +173,6 @@ function onKeyDown(e) {
   // Down Arrow
   if (code === 40 || code === 83)
     controls.moveForward(-0.12);
-
-  // Escape key
-  if (code === 27)
-    toggleMenu("flex");
 }
 
 // Finally render the scene.
