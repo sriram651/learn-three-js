@@ -77,26 +77,26 @@ const blueWallParams = {
 const frontWallGeometry = createWall(blueWallParams);
 
 // Push the front wall away from the camera
-frontWallGeometry.position.z = -20;
+frontWallGeometry.position.z = -30;
 
 // Front Wall
 const rearWallGeometry = createWall(blueWallParams);
 
 // Push the rear wall away from the camera
-rearWallGeometry.position.z = 20;
+rearWallGeometry.position.z = 30;
 
 // Left Wall
 const leftWallGeometry = createWall(blueWallParams);
 
 // Rotate the leftWall along the y-axis 90deg and then push it to the left side
-leftWallGeometry.position.x = -20;
+leftWallGeometry.position.x = -30;
 leftWallGeometry.rotation.y = Math.PI / 2;
 
 // Left Wall
 const rightWallGeometry = createWall(blueWallParams);
 
 // Rotate the rightWall along the y-axis 90deg and then push it to the right side
-rightWallGeometry.position.x = 20;
+rightWallGeometry.position.x = 30;
 rightWallGeometry.rotation.y = Math.PI / 2;
 
 
@@ -114,17 +114,19 @@ const ceilingWall = new THREE.Mesh(
 
 // Rotate the Ceiling along the x-axis 90deg and push to the the top.
 ceilingWall.rotation.x = Math.PI / 2;
-ceilingWall.position.y = Math.PI * 3;
+ceilingWall.position.y = Math.PI * 5;
 
 // Add the Ceiling to the scene
 scene.add(ceilingWall);
 
 // Create the paintings using the utility function.
-const painting1 = createPainting("/images/carousel-image4.webp", 10, 5, new THREE.Vector3(-10, 5, -19.99));
-const painting2 = createPainting("/images/ronaldo-ucl.jpg", 10, 5, new THREE.Vector3(10, 5, -19.99));
+const painting1 = createPainting("/images/carousel-image4.webp", 15, 8, new THREE.Vector3(-15, 5, -29.99));
+const painting2 = createPainting("/images/ronaldo-ucl.jpg", 15, 8, new THREE.Vector3(15, 5, -29.99));
+const painting3 = createPainting("/images/carousel-image4.webp", 15, 8, new THREE.Vector3(-29.99, 5, -10), { x: 0, y: Math.PI / 2, z: 0 });
+const painting4 = createPainting("/images/ronaldo-ucl.jpg", 15, 8, new THREE.Vector3(29.99, 5, -10), { x: 0, y: Math.PI / 2, z: 0 });
 
 // Finally add the paintings to the scene
-scene.add(painting1, painting2);
+scene.add(painting1, painting2, painting3, painting4);
 
 // Controls
 const controls = new PointerLockControls(camera, document.body);
