@@ -53,7 +53,7 @@ directionalLight.position.y = 15;
 scene.add(directionalLight);
 
 // Create a texture for the floor.
-const texture = loadTexture("./public/images/sandal-marble-texture.webp");
+const texture = loadTexture("./images/sandal-marble-texture.webp");
 
 // Create a Floor plane
 const planeGeometry = new THREE.PlaneGeometry(100, 100);
@@ -70,7 +70,7 @@ scene.add(plane);
 const wallGroup = new THREE.Group();
 
 const blueWallParams = {
-  map: loadTexture("./public/images/blue-marble-texture.webp"),
+  map: loadTexture("./images/blue-marble-texture.webp"),
   side: THREE.DoubleSide
 };
 // Front Wall
@@ -120,10 +120,10 @@ ceilingWall.position.y = Math.PI * 5;
 scene.add(ceilingWall);
 
 // Create the paintings using the utility function.
-const painting1 = createPainting("./public/images/carousel-image4.webp", 15, 8, new THREE.Vector3(-15, 5, -29.99));
-const painting2 = createPainting("./public/images/ronaldo-ucl.jpg", 15, 8, new THREE.Vector3(15, 5, -29.99));
-const painting3 = createPainting("./public/images/carousel-image4.webp", 15, 8, new THREE.Vector3(-29.99, 5, -10), { x: 0, y: Math.PI / 2, z: 0 });
-const painting4 = createPainting("./public/images/ronaldo-ucl.jpg", 15, 8, new THREE.Vector3(29.99, 5, -10), { x: 0, y: Math.PI / 2, z: 0 });
+const painting1 = createPainting("./images/carousel-image4.webp", 15, 8, new THREE.Vector3(-15, 5, -29.99));
+const painting2 = createPainting("./images/ronaldo-ucl.jpg", 15, 8, new THREE.Vector3(15, 5, -29.99));
+const painting3 = createPainting("./images/carousel-image4.webp", 15, 8, new THREE.Vector3(-29.99, 5, -10), { x: 0, y: Math.PI / 2, z: 0 });
+const painting4 = createPainting("./images/ronaldo-ucl.jpg", 15, 8, new THREE.Vector3(29.99, 5, -10), { x: 0, y: Math.PI / 2, z: 0 });
 
 // Finally add the paintings to the scene
 scene.add(painting1, painting2, painting3, painting4);
