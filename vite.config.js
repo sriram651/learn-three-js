@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    base: "/learn-three-js/"
+    base: "/learn-three-js/arjs/"
 });
